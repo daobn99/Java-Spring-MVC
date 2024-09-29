@@ -21,6 +21,12 @@ public class UserController {
         model.addAttribute("dao", test);
         return "hello";
     }
+
+    @RequestMapping("/admin/user")
+    public String getUserPage() {
+        return "admin/user/create";
+    }
+
 }
 // @RestController
 // public class UserController {
