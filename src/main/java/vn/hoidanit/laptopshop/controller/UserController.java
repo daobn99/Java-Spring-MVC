@@ -7,24 +7,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import vn.hoidanit.laptopshop.domain.User;
-import vn.hoidanit.laptopshop.repository.UserRepository;
 import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
 public class UserController {
+    /**
+     * đây có thể hiểu là tạo 属性 của class trong java core
+     * Spring Frameworkでは、UserService と UserRepository という依存オブジェクトは、
+     * コンストラクタにより注入（DI: Dependency Injection）されます。
+     * Springは、これらのオブジェクトのインスタンスを自動的に作成し、
+     * このコントローラに渡してくれます。このようにして、UserController 内で
+     * userService や userRepository を利用できるようになります。
+     */
 
     private final UserService userService;
-    private final UserRepository userRepository;
 
-    public UserController(UserService userService, UserRepository userRepository) {
+    // dùng tool generate constructor cho nhanh
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @RequestMapping("/")
     public String getHomePage(Model model) {
-        String test = this.userService.handleHello();
-        model.addAttribute("dao", test);
+        model.addAttribute("dao", "test");
         return "hello";
     }
 
@@ -37,7 +42,7 @@ public class UserController {
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
     public String createUserPage(Model model, @ModelAttribute("newUser") User user1) {
         System.out.println(" run here " + user1);
-        userRepository.save(user1);
+        this.userService.handleSaveUser(user1);
         return "hello";
     }
 
