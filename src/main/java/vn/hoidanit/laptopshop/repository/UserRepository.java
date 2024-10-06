@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User save(User newUser); // newUser đặt là gì cũng đc
 
     List<User> findByEmail(String email);
+
+    @Override
+    List<User> findAll();
 }
