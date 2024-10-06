@@ -39,6 +39,11 @@ public class UserController {
 
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
+        return "admin/user/table-users";
+    }
+
+    @RequestMapping("/admin/user/create") // GET
+    public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User()); // newUser là tên trùng với modelAttribute của file create.jsp
         return "admin/user/create";
     }
