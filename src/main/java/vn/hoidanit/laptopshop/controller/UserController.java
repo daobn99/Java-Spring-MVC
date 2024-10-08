@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,6 +44,13 @@ public class UserController {
         // System.out.println(">>> check user: " + users);
         model.addAttribute("users1", users);
         return "admin/user/table-users";
+    }
+
+    @RequestMapping("/admin/user/{id}") // id đặt tên thế nào cũng được
+    public String getUserDetailPage(Model model, @PathVariable long id) {
+        // System.out.println("check path id: " + id);
+        model.addAttribute("id", id);
+        return "admin/user/userDetail";
     }
 
     @RequestMapping("/admin/user/create") // GET
