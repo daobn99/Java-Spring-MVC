@@ -48,8 +48,9 @@ public class UserController {
 
     @RequestMapping("/admin/user/{id}") // id đặt tên thế nào cũng được
     public String getUserDetailPage(Model model, @PathVariable long id) {
-        // System.out.println("check path id: " + id);
-        model.addAttribute("id", id);
+        User user = this.userService.getUserById(id);
+        model.addAttribute("user", user); // "user" này chính là cái tên biến dùng để ${user.} bên file jsp
+        model.addAttribute("id", id); // "id" này tương tự "user" phía trên
         return "admin/user/userDetail";
     }
 
