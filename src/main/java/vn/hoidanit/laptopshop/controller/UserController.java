@@ -54,6 +54,12 @@ public class UserController {
         return "admin/user/userDetail";
     }
 
+    @RequestMapping("/admin/user/update/{id}")
+    public String getUpdateUserPage(Model model) {
+        model.addAttribute("newUser", new User());
+        return "admin/user/update";
+    }
+
     @RequestMapping("/admin/user/create") // GET
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User()); // newUser là tên trùng với modelAttribute của file create.jsp
