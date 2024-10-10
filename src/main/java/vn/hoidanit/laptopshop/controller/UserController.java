@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -38,6 +39,7 @@ public class UserController {
         return "hello";
     }
 
+    // user table list
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUsers();
@@ -46,6 +48,7 @@ public class UserController {
         return "admin/user/table-users";
     }
 
+    // display user detail
     @RequestMapping("/admin/user/{id}") // id đặt tên thế nào cũng được
     public String getUserDetailPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
@@ -54,24 +57,40 @@ public class UserController {
         return "admin/user/userDetail";
     }
 
-    @RequestMapping("/admin/user/update/{id}")
-    public String getUpdateUserPage(Model model) {
-        model.addAttribute("newUser", new User());
-        return "admin/user/update";
-    }
-
+    // create new user
     @RequestMapping("/admin/user/create") // GET
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User()); // newUser là tên trùng với modelAttribute của file create.jsp
         return "admin/user/create";
     }
 
+    // userCreateを保存する
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String createUserPage(Model model, @ModelAttribute("newUser") User user1) {
-        this.userService.handleSaveUser(user1);
+    public String createUserPage(Model model, @ModelAttribute("newUser") User userCreate) {
+        this.userService.handleSaveUser(userCreate);
         return "redirect:/admin/user";
     }
 
+    // ユーザーの情報を作成フォームに表示させる
+    @RequestMapping("/admin/user/update/{id}") // GET
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
+        User currentUser = this.userService.getUserById(id);
+        model.addAttribute("newUser", currentUser);
+        return "admin/user/update";
+    }
+
+    // Updateしたユーザーの情報を保存する
+    @PostMapping("/admin/user/update") // dùng method = RequestMethod.POST cũng được
+    public String postUpdateUser(Model model, @ModelAttribute("newUser") User userUpdate) {
+        User currentUser = this.userService.getUserById(userUpdate.getId());
+        if (currentUser != null) {
+            currentUser.setAddress(userUpdate.getAddress());
+            currentUser.setFullName(userUpdate.getFullName());
+            currentUser.setPhone(userUpdate.getPhone());
+            this.userService.handleSaveUser(userUpdate);
+        }
+        return "redirect:/admin/user";
+    }
 }
 // @RestController
 // public class UserController {

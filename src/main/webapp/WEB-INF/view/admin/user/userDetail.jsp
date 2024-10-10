@@ -28,7 +28,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
           </div>
           <hr />
           <div class="card" style="width: 60%">
-            <div class="card-header">Featured</div>
+            <div class="card-header">User information</div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">ID: ${user.id}</li>
               <li class="list-group-item">Email: ${user.email}</li>
