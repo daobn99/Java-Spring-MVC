@@ -87,7 +87,7 @@ public class UserController {
             currentUser.setAddress(userUpdate.getAddress());
             currentUser.setFullName(userUpdate.getFullName());
             currentUser.setPhone(userUpdate.getPhone());
-            this.userService.handleSaveUser(userUpdate);
+            this.userService.handleSaveUser(currentUser);
         }
         return "redirect:/admin/user";
     }
