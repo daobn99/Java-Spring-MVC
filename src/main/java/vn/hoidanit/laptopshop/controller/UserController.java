@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +76,7 @@ public class UserController {
     @RequestMapping("/admin/user/update/{id}") // GET
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User currentUser = this.userService.getUserById(id);
-        model.addAttribute("newUser", currentUser);
+        model.addAttribute("updateUser", currentUser);
         return "admin/user/update";
     }
 
@@ -89,6 +90,23 @@ public class UserController {
             currentUser.setPhone(userUpdate.getPhone());
             this.userService.handleSaveUser(currentUser);
         }
+        return "redirect:/admin/user";
+    }
+
+    // Delete user
+    @GetMapping("/admin/user/delete/{id}")
+    public String deleteUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        // User user = new User();
+        // user.setId(id);
+        model.addAttribute("newUser", new User());
+        return "/admin/user/delete";
+    }
+
+    // データベースのユーザを削除する
+    @PostMapping("/admin/user/delete")
+    public String deleteUserPage(Model model, @ModelAttribute("newUser") User userDeleted) {
+        this.userService.deleteUser(userDeleted.getId());
         return "redirect:/admin/user";
     }
 }

@@ -33,4 +33,8 @@ public class UserService {
         // System.out.println(eric);
         return eric;
     }
+
+    public void deleteUser(long id) {
+        this.userRepository.deleteById(id);
+    }
 }
