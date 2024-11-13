@@ -4,8 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity // đại diện cho một table tương ứng trong database
+/*
+ * thường đặt tên dạng số nhiều. Không có dòng @Table này thì mặc định tạo table
+ * tên là "user" trong database
+ */
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // id tự động tăng
