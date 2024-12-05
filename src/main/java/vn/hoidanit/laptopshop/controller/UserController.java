@@ -45,7 +45,7 @@ public class UserController {
     public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUsers();
         // System.out.println(">>> check user: " + users);
-        model.addAttribute("users1", users);
+        model.addAttribute("users", users);
         return "admin/user/table-users";
     }
 
